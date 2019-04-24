@@ -4,7 +4,7 @@ import Todo from './Todo.js';
 const TodoList = props => {
   return (
     <div>
-      {props.list.map(item => <Todo todo={item}/> )}
+      {props.list.map(item => <Todo complete={props.complete} toggle={props.toggle} todo={item}/> )}
     </div>
   );
 };

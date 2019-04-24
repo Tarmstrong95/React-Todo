@@ -1,4 +1,5 @@
 import React from 'react';
+import './components/TodoComponents/Todo.css'
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
 
@@ -23,31 +24,18 @@ class App extends React.Component {
       toDo :  {
         task: '', 
         id: '',
-        completed: ''
+        completed: false
       }
     }
   }
 
-  componentDidMount(){
-    this.updateAll();
-  }
-
-  updateAll = () => {
-    this.setState({
-      toDo: {
-        ...this.state.toDo,
-        task: '',
-        id: '',
-        completed: 'false'
-      }
-    })
-  }
 
 updateInput = (e) => {
   this.setState({
     toDo: {
       ...this.state.toDo,
-      task: e.target.value
+      task: e.target.value,
+      id: Date.now()
     }
   })
 }
@@ -55,24 +43,36 @@ updateInput = (e) => {
 
 submit = (e) => {
   e.preventDefault();
-  this.setState({
+
+  if(this.state.toDo.task !== "") // If input has value - submit
+ this.setState({
     toDoList: [...this.state.toDoList, this.state.toDo],
     toDo: {
       task: '',
       id: '',
-      completed: ''
+      completed: false
     }
   })
+
 }
 
 
+toggleDone = (e) => {
+  e.target.classList.toggle('strike');
+}
+
+
+deleteItem = (e) => {
+  e.preventDefault();
+  console.log("dont know wtf to do")
+}
 
 
   render() {
     return (
       <div>
-        <TodoList list={this.state.toDoList}/>
-        <TodoForm input={this.updateInput} submit={this.submit}/>
+        <TodoList complete={this.state.toDo.completed} list={this.state.toDoList} toggle={this.toggleDone}/>
+        <TodoForm value={this.state.toDo.task} input={this.updateInput} submit={this.submit} delete={this.deleteItem}/>
       </div>
     );
   }
