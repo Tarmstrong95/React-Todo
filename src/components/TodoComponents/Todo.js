@@ -2,7 +2,7 @@ import React from 'react';
 
 const Todo = props => {
     return(
-        <li isComplete={props.complete} onClick={props.toggle}>{props.todo.task}</li>
+        <li id={props.id} complete={props.complete.toString()} onClick={props.toggle}>{props.todo.task}</li>
     )
 }
 

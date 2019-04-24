@@ -7,12 +7,12 @@ import TodoForm from './components/TodoComponents/TodoForm';
 const todoList = [
   {
     task: 'Run', 
-    id: Date.now(),
+    id: 651191,
     completed: false
   },
   {
     task: 'Work Out', 
-    id: Date.now(),
+    id: 491651651,
     completed: false
   }
 ]
@@ -59,20 +59,32 @@ submit = (e) => {
 
 toggleDone = (e) => {
   e.target.classList.toggle('strike');
+const bool = e.target.getAttribute("complete");
+  bool === "false" ?
+  e.target.setAttribute("complete", "true") : e.target.setAttribute('complete', 'false')
 }
 
 
 deleteItem = (e) => {
   e.preventDefault();
-  console.log("dont know wtf to do")
 }
 
 
   render() {
     return (
       <div>
-        <TodoList complete={this.state.toDo.completed} list={this.state.toDoList} toggle={this.toggleDone}/>
-        <TodoForm value={this.state.toDo.task} input={this.updateInput} submit={this.submit} delete={this.deleteItem}/>
+        <TodoList 
+        id={this.state.toDo.id} 
+        complete={this.state.toDo.completed} 
+        list={this.state.toDoList} 
+        toggle={this.toggleDone}
+        />
+        <TodoForm 
+        value={this.state.toDo.task} 
+        input={this.updateInput} 
+        submit={this.submit} 
+        delete={this.deleteItem}
+        />
       </div>
     );
   }
