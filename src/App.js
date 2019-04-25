@@ -46,7 +46,7 @@ submit = (e) => {
 
   if(this.state.toDo.task !== "") // If input has value - submit
  this.setState({
-    toDoList: [...this.state.toDoList, this.state.toDo],
+    toDoList: [this.state.toDo, ...this.state.toDoList],
     toDo: {
       task: '',
       id: '',
@@ -58,32 +58,34 @@ submit = (e) => {
 
 
 toggleDone = (e) => {
-  e.target.classList.toggle('strike');
-const bool = e.target.getAttribute("complete");
-  bool === "false" ?
-  e.target.setAttribute("complete", "true") : e.target.setAttribute('complete', 'false')
+this.setState({
+  toDoList: this.state.toDoList.map(x => 
+    x.id === e ? {...x, completed: !x.completed} : x)
+})
 }
 
 
 deleteItem = (e) => {
   e.preventDefault();
+  this.setState({
+    toDoList: this.state.toDoList.filter(x => !x.completed)
+  })
 }
 
 
   render() {
     return (
-      <div>
-        <TodoList 
-        id={this.state.toDo.id} 
-        complete={this.state.toDo.completed} 
-        list={this.state.toDoList} 
-        toggle={this.toggleDone}
-        />
-        <TodoForm 
+      <div className="app">
+      <TodoForm 
         value={this.state.toDo.task} 
         input={this.updateInput} 
         submit={this.submit} 
         delete={this.deleteItem}
+        />
+        <TodoList 
+        id={this.state.toDo.id} 
+        list={this.state.toDoList} 
+        toggle={this.toggleDone}
         />
       </div>
     );
